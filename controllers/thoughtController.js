@@ -16,5 +16,26 @@ module.exports = {
         } catch(err) {
             res.status(400).json(err)
         }
+    },
+    async createThought(req,res) {
+        try {
+            res.status(200).json({ success: 'true' })
+        } catch(err) {
+            res.status(500).json(err)
+        }
+    },
+    async updateThought(req,res) {
+        try {
+            res.status(200).json({ success: 'true' })
+        } catch(err) {
+            res.status(500).json(err)
+        }
+    },
+    async deleteThought(req,res) {
+        try {
+            res.status(200).json({ success: 'true' })
+        } catch(err) {
+            res.status(500).json(err)
+        }
     }
 }
