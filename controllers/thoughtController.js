@@ -33,7 +33,12 @@ module.exports = {
     },
     async deleteThought(req,res) {
         try {
-            res.status(200).json({ success: 'true' })
+            const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId })
+            if (!thought) {
+                return res.status(404).json({ message: 'Thought does not exist' })
+            }
+
+            res.status(200).json({ success: 'Thought deleted' })
         } catch(err) {
             res.status(500).json(err)
         }
