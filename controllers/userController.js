@@ -69,5 +69,40 @@ module.exports = {
             console.log(err)
             res.status(400).json(err)
         }
+    },
+    async addFriend(req,res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId},
+                { $push: { friends: req.params.friendId } },
+                { new: true }
+            )
+            const addBack = await User.findOneAndUpdate(
+                { _id: req.params.friendId},
+                { $push: { friends: req.params.userId } },
+                { new: true }
+            )
+            res.status(200).json({ user })
+        } catch(err) {
+            res.status(500).json(err)
+        }
+    },
+    async deleteFriend(req,res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: { friends: req.params.friendId } },
+                { new: true }
+            )
+            const friend = await User.findOneAndUpdate(
+                { _id: req.params.friendId },
+                { $pull: { friends: req.params.userId } },
+                { new: true }
+            )
+
+            res.status(200).json({ message: 'Friend deleted successfully' })
+        } catch(err) {
+            res.status(500).json(err)
+        }
     }
 }
