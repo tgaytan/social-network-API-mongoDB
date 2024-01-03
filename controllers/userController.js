@@ -59,7 +59,6 @@ module.exports = {
             }
 
             const thoughts = await Thought.deleteMany({ username: user.username  })
-            console.log(thoughts)
             if (thoughts.deletedCount === 0) {
                 return res.status(200).json({ message: 'User deleted. User did not have any Thoughts to delete' })
             }

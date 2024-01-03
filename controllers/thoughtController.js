@@ -1,4 +1,4 @@
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
     async getThoughts(req, res) {
@@ -20,6 +20,11 @@ module.exports = {
     async createThought(req,res) {
         try {
             const thought = await Thought.create(req.body)
+            const user = await User.findOneAndUpdate(
+                {username: req.body.username},
+                { $push: { thoughts: thought._id } },
+                { new: true }
+            )
             res.status(200).json(thought)
         } catch(err) {
             res.status(500).json(err)
@@ -49,6 +54,11 @@ module.exports = {
             if (!thought) {
                 return res.status(404).json({ message: 'Thought does not exist' })
             }
+            const user = await User.findOneAndUpdate(
+                { username: thought.username },
+                { $pull: { thoughts: thought._id }},
+                { new: true }
+            )
 
             res.status(200).json({ success: 'Thought deleted' })
         } catch(err) {
