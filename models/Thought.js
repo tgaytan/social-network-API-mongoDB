@@ -11,7 +11,8 @@ const thoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
+            get: changeFormat
         },
         username: {
             type: String,
@@ -21,7 +22,8 @@ const thoughtSchema = new Schema(
     },
     {
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            getters: true
         },
         id: false
     }
@@ -30,6 +32,10 @@ const thoughtSchema = new Schema(
 thoughtSchema.virtual('NumberOfReactions').get(function () {
     return this.reactions.length
 })
+
+function changeFormat(date) {
+    return 'random'
+}
 
 const Thought = model('Thought', thoughtSchema);
 
