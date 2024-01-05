@@ -6,6 +6,7 @@ module.exports = {
             const thoughts = await Thought.find();
             res.status(200).json(thoughts);
         } catch(err) {
+            console.log(err)
             res.status(400).json(err);
         }
     },

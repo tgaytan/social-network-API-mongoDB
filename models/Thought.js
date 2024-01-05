@@ -34,9 +34,9 @@ thoughtSchema.virtual('NumberOfReactions').get(function () {
 })
 
 function changeFormat(date) {
-    return 'random'
+    return `${date}`
 }
 
-const Thought = model('Thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema)
 
 module.exports = Thought;
